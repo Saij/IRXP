@@ -1,0 +1,12 @@
+Build.PL
+installdeps
+lib/IRXP.pm
+lib/IRXP/LexWrap.pm
+lib/IRXP/Log.pm
+lib/IRXP/Log/File.pm
+lib/IRXP/Log/Stderr.pm
+lib/IRXP/Modules.pm
+lib/IRXP/Modules/MDBDetailExtension.pm
+lib/IRXP/Utils.pm
+templates/tmpl_mdb_edit_item_additional.html
+MANIFEST			This list of files

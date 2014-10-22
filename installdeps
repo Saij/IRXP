@@ -1,0 +1,29 @@
+#!/bin/bash
+CURDIR=$(pwd)
+
+if [ "$1" == "reinstall" ]
+then
+    rm -rfv deps/* 1>&2
+fi
+
+perl -Mlocal::lib -I./deps/lib/perl5 -e "exit 0" >/dev/null 2>&1
+if [ $? -gt 0 ]
+then 
+    cd locallib
+    perl Makefile.PL --no-manpages --bootstrap=../deps
+    make && make test && make install
+    cd $CURDIR
+
+    perl -Mlocal::lib -I./deps/lib/perl5 -e "exit 0" >/dev/null 2>&1
+    if [ $? -gt 0 ]
+    then
+        echo "Could not install local::lib!"
+        exit 1
+    fi
+else
+    echo "local::lib already installed"
+fi
+
+eval $(perl -I./deps/lib/perl5 -Mlocal::lib=./deps)
+export PERL_MM_USE_DEFAULT=1
+perl ./Build.PL && ./Build installdeps --cpan-client 'cpan -T -i -f'
